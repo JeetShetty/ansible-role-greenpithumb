@@ -1,0 +1,52 @@
+---
+- name: create greenpithumb group
+  group:
+    name: "{{ greenpithumb_group }}"
+    state: "present"
+
+- name: create greenpithumb user
+  user:
+    name: "{{ greenpithumb_user }}"
+    group: "{{ greenpithumb_group }}"
+    system: "yes"
+
+- name: install necessary packages
+  apt:
+    name: "{{ item }}"
+    state: installed
+  with_items:
+    - build-essential
+    - git
+    - python-dev
+    - python-openssl
+    - python-pip
+
+- name: install libraries
+  pip:
+    name: "{{ item }}"
+  with_items:
+    - adafruit-mcp3008
+    - RPi.GPIO
+
+- name: download Adafruit DHT library
+  git:
+    repo: https://github.com/adafruit/Adafruit_Python_DHT
+    dest: /tmp/Adafruit_Python_DHT
+
+- name: install Adafruit DHT library
+  command: python setup.py install
+  args:
+    chdir: /tmp/Adafruit_Python_DHT
+
+- name: download greenpithumb backend code
+  git:
+    repo: https://github.com/JeetShetty/GreenPiThumb
+    dest: "{{ greenpithumb_backend_path }}"
+
+- name: set greenpithumb file permissions
+  file:
+    path: "{{ greenpithumb_backend_path }}"
+    owner: "{{ greenpithumb_user }}"
+    group: "{{ greenpithumb_group }}"
+    recurse: yes
+    state: directory
