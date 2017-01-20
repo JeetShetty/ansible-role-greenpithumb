@@ -1,0 +1,43 @@
+#!/bin/sh
+
+# Exit immediately on error
+set -e
+
+# Pull container.
+sudo docker pull geerlingguy/docker-${distro}-ansible:latest
+
+# Customize container
+container_tag=${distro}:ansible
+sudo docker build \
+  --rm=true \
+  --file=tests/Dockerfile.${distro} \
+  --tag=${container_tag} tests
+
+# Run container in detached state
+id_file=$(mktemp)
+sudo docker run \
+  --detach \
+  --volume="${PWD}":/etc/ansible/roles/role_under_test:ro \
+  ${container_tag} ${init} > "${id_file}"
+container_id="$(cat $id_file)"
+echo "Container ID:" "${container_id}"
+
+# Ansible syntax check.
+sudo docker exec "${container_id}" \
+  env TERM=xterm \
+  ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml \
+    --syntax-check
+
+# Ansible lint check.
+sudo docker exec "${container_id}" \
+  env TERM=xterm \
+  ansible-lint /etc/ansible/roles/role_under_test/tests/test.yml
+
+# Check that role installs successfully.
+sudo docker exec "${container_id}" \
+  env TERM=xterm \
+  ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml
+
+# Clean up
+sudo docker stop "${container_id}"
+sudo docker rm "${container_id}"

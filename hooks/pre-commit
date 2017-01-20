@@ -1,0 +1,6 @@
+#!/bin/bash
+
+export distro=ubuntu1404
+export init=/sbin/init
+
+bash -x ./build
