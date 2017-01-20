@@ -29,6 +29,12 @@ greenpithumb_git_version: "master"
 
 The source git version/branch to install GreenPiThumb.
 
+```yaml
+greenpithumb_git_repo: "https://github.com/JeetShetty/GreenPiThumb"
+```
+
+The git repository to use for GreenPiThumb.
+
 ## Dependencies
 
 None

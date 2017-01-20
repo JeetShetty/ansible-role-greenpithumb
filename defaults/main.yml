@@ -2,4 +2,5 @@
 greenpithumb_user: greenpithumb
 greenpithumb_group: greenpithumb
 greenpithumb_backend_path: "/opt/greenpithumb"
+greenpithumb_git_repo: "https://github.com/JeetShetty/GreenPiThumb"
 greenpithumb_git_version: "master"
