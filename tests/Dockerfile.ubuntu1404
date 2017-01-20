@@ -1,0 +1,6 @@
+FROM geerlingguy/docker-ubuntu1404-ansible:latest
+
+# Install ansible-lint
+RUN apt-get update
+RUN apt-get install -y python-pip
+RUN pip install ansible-lint

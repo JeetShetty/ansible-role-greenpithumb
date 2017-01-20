@@ -1,0 +1,22 @@
+---
+sudo: required
+env:
+  - distro: ubuntu1404
+    init: /sbin/init
+  - distro: ubuntu1604
+    init: /lib/systemd/systemd
+
+services:
+  - docker
+
+install:
+  - pip install ansible==2.2.0
+
+  # Check ansible version
+  - ansible --version
+
+script:
+  - ./build
+
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/

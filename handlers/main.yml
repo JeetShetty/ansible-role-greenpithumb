@@ -1,0 +1,5 @@
+---
+- name: install Adafruit DHT library
+  command: "python setup.py install {{ adafruit_dht_extra_args }}"
+  args:
+    chdir: "{{ __greenpithumb_adafruit_dht_tmp_path }}"

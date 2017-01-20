@@ -1,4 +1,7 @@
 ---
+- name: load variables
+  include_vars: "main.yml"
+
 - name: create greenpithumb group
   group:
     name: "{{ greenpithumb_group }}"
@@ -31,17 +34,21 @@
 - name: download Adafruit DHT library
   git:
     repo: https://github.com/adafruit/Adafruit_Python_DHT
-    dest: /tmp/Adafruit_Python_DHT
+    version: master
+    dest: "{{ __greenpithumb_adafruit_dht_tmp_path }}"
+  notify:
+    - install Adafruit DHT library
 
-- name: install Adafruit DHT library
-  command: python setup.py install
-  args:
-    chdir: /tmp/Adafruit_Python_DHT
+- name: set Adafruit DHT library test compatibility
+  set_fact:
+    adafruit_dht_extra_args: "--force-test"
+  when: "'arm' not in ansible_machine"
 
 - name: download greenpithumb backend code
   git:
     repo: https://github.com/JeetShetty/GreenPiThumb
     dest: "{{ greenpithumb_backend_path }}"
+    version: "{{ greenpithumb_git_version }}"
 
 - name: set greenpithumb file permissions
   file:
