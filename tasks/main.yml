@@ -39,6 +39,9 @@
   notify:
     - install Adafruit DHT library
 
+# The Adafruit DHT library will refuse to install on non SBC machines, so if
+# the target machine is not ARM-based, assume this is an install on a test
+# machine and add the force test parameter.
 - name: set Adafruit DHT library test compatibility
   set_fact:
     adafruit_dht_extra_args: "--force-test"
@@ -46,7 +49,7 @@
 
 - name: download greenpithumb backend code
   git:
-    repo: https://github.com/JeetShetty/GreenPiThumb
+    repo: "{{ greenpithumb_git_repo }}"
     dest: "{{ greenpithumb_backend_path }}"
     version: "{{ greenpithumb_git_version }}"
 
@@ -57,3 +60,16 @@
     group: "{{ greenpithumb_group }}"
     recurse: yes
     state: directory
+
+- name: install greenpithumb dependencies
+  pip:
+    requirements: "{{ greenpithumb_backend_path }}/requirements.txt"
+
+- name: create wiring config
+  copy:
+    src: "{{ greenpithumb_backend_path }}/greenpithumb/wiring_config.ini.example"
+    dest: "{{ greenpithumb_backend_path }}/greenpithumb/wiring_config.ini"
+    owner: "{{ greenpithumb_user }}"
+    group: "{{ greenpithumb_group }}"
+    mode: 0444
+    remote_src: yes
