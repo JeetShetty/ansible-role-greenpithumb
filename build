@@ -22,6 +22,11 @@ sudo docker run \
 container_id="$(cat $id_file)"
 echo "Container ID:" "${container_id}"
 
+# Install dependencies.
+sudo docker exec "${container_id}" \
+  ansible-galaxy install \
+    -r /etc/ansible/roles/role_under_test/tests/requirements.yml
+
 # Ansible syntax check.
 sudo docker exec "${container_id}" \
   env TERM=xterm \
@@ -31,7 +36,8 @@ sudo docker exec "${container_id}" \
 # Ansible lint check.
 sudo docker exec "${container_id}" \
   env TERM=xterm \
-  ansible-lint /etc/ansible/roles/role_under_test/tests/test.yml
+  ansible-lint /etc/ansible/roles/role_under_test/tests/test.yml \
+    --exclude /etc/ansible/roles/geerlingguy.nginx
 
 # Check that role installs successfully.
 sudo docker exec "${container_id}" \

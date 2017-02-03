@@ -1,0 +1,15 @@
+description "Run greenpithumb-frontend"
+
+start on runlevel [3]
+stop on runlevel [!2345]
+
+setuid greenpithumb-frontend
+setgid greenpithumb-frontend
+
+respawn
+
+script
+	cd {{ greenpithumb_frontend_path }}
+	python server/server.py \
+		--port {{ greenpithumb_frontend_app_port }}
+end script

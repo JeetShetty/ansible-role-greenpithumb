@@ -2,16 +2,24 @@
 - name: load variables
   include_vars: "main.yml"
 
-- name: create greenpithumb group
+- name: create greenpithumb groups
   group:
-    name: "{{ greenpithumb_group }}"
+    name: "{{ item }}"
     state: "present"
+  with_items:
+    - "{{ greenpithumb_backend_group }}"
+    - "{{ greenpithumb_frontend_group }}"
 
-- name: create greenpithumb user
+- name: create greenpithumb users
   user:
-    name: "{{ greenpithumb_user }}"
-    group: "{{ greenpithumb_group }}"
+    name: "{{ item.user }}"
+    group: "{{ item.group }}"
     system: "yes"
+  with_items:
+    - user: "{{ greenpithumb_backend_user }}"
+      group: "{{ greenpithumb_backend_group }}"
+    - user: "{{ greenpithumb_frontend_user }}"
+      group: "{{ greenpithumb_frontend_group }}"
 
 - name: install necessary packages
   apt:
@@ -56,8 +64,8 @@
 - name: set greenpithumb file permissions
   file:
     path: "{{ greenpithumb_backend_path }}"
-    owner: "{{ greenpithumb_user }}"
-    group: "{{ greenpithumb_group }}"
+    owner: "{{ greenpithumb_backend_user }}"
+    group: "{{ greenpithumb_backend_group }}"
     recurse: yes
     state: directory
 
@@ -69,7 +77,49 @@
   copy:
     src: "{{ greenpithumb_backend_path }}/greenpithumb/wiring_config.ini.example"
     dest: "{{ greenpithumb_backend_path }}/greenpithumb/wiring_config.ini"
-    owner: "{{ greenpithumb_user }}"
-    group: "{{ greenpithumb_group }}"
+    owner: "{{ greenpithumb_backend_user }}"
+    group: "{{ greenpithumb_backend_group }}"
     mode: 0444
     remote_src: yes
+
+- name: download greenpithumb frontend code
+  git:
+    repo: "{{ greenpithumb_frontend_git_repo }}"
+    dest: "{{ greenpithumb_frontend_path }}"
+    version: "{{ greenpithumb_frontend_git_version }}"
+
+- name: set greenpithumb frontend file permissions
+  file:
+    path: "{{ greenpithumb_frontend_path }}"
+    owner: "{{ greenpithumb_frontend_user }}"
+    group: "{{ greenpithumb_frontend_group }}"
+    recurse: yes
+    state: directory
+
+- name: install greenpithumb frontend dependencies
+  pip:
+    requirements: "{{ greenpithumb_frontend_path }}/requirements.txt"
+
+# TODO(mtlynch): Switch to systemd because upstart is dead and not installed
+# by default on Debian.
+- name: copy upstart script
+  template:
+    src: greenpithumb-frontend.conf.j2
+    dest: /etc/init/greenpithumb-frontend.conf
+    mode: 0644
+  notify:
+    - restart greenpithumb-frontend
+
+- name: download greenpithumb frontend static files
+  git:
+    repo: "{{ greenpithumb_frontend_static_git_repo }}"
+    dest: "{{ greenpithumb_frontend_static_root }}"
+    version: "{{ greenpithumb_frontend_static_git_version }}"
+
+- name: set greenpithumb frontend static file permissions
+  file:
+    path: "{{ greenpithumb_frontend_static_root }}"
+    owner: "{{ greenpithumb_frontend_user }}"
+    group: "{{ greenpithumb_frontend_group }}"
+    recurse: yes
+    state: directory

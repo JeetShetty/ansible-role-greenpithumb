@@ -1,0 +1,16 @@
+---
+galaxy_info:
+  author: Jeet Shetty and Michael Lynch
+  description: GreenPiThumb role
+  license: Apache2
+  min_ansible_version: 2.1
+  platforms:
+  - name: Ubuntu
+    versions:
+      - trusty
+      - xenial
+  galaxy_tags:
+    - greenpithumb
+    - raspberrypi
+dependencies:
+  - { role: geerlingguy.nginx }
