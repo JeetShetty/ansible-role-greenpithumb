@@ -18,6 +18,7 @@ id_file=$(mktemp)
 sudo docker run \
   --detach \
   --volume="${PWD}":/etc/ansible/roles/role_under_test:ro \
+  ${run_opts} \
   ${container_tag} ${init} > "${id_file}"
 container_id="$(cat $id_file)"
 echo "Container ID:" "${container_id}"

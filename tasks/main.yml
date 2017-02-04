@@ -102,13 +102,13 @@
 
 # TODO(mtlynch): Switch to systemd because upstart is dead and not installed
 # by default on Debian.
-- name: copy upstart script
-  template:
-    src: greenpithumb-frontend.conf.j2
-    dest: /etc/init/greenpithumb-frontend.conf
-    mode: 0644
-  notify:
-    - restart greenpithumb-frontend
+#- name: copy upstart script
+#  template:
+#    src: greenpithumb-frontend.conf.j2
+#    dest: /etc/init/greenpithumb-frontend.conf
+#    mode: 0644
+#  notify:
+#    - restart greenpithumb-frontend
 
 - name: download greenpithumb frontend static files
   git:
@@ -119,7 +119,6 @@
 - name: set greenpithumb frontend static file permissions
   file:
     path: "{{ greenpithumb_frontend_static_root }}"
-    owner: "{{ greenpithumb_frontend_user }}"
-    group: "{{ greenpithumb_frontend_group }}"
+    owner: "{{ nginx_user }}"
     recurse: yes
     state: directory

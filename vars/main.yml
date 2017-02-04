@@ -22,6 +22,5 @@ nginx_vhosts:
        proxy_pass http://localhost:{{ greenpithumb_frontend_app_port }};
      }
 nginx_remove_default_vhost: true
-nginx_user: "{{ greenpithumb_frontend_user }}"
 nginx_extra_http_options: |
     proxy_buffering    off;
