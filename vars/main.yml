@@ -1,2 +1,26 @@
 ---
 __greenpithumb_adafruit_dht_tmp_path: /tmp/Adafruit_Python_DHT
+nginx_vhosts:
+- listen: "{{ greenpithumb_frontend_web_port }} default_server"
+  server_name: "greenpithumb_frontend"
+  root: "{{ greenpithumb_frontend_static_root }}"
+  index: "dashboard.html"
+  extra_parameters: |
+     location /static/ {
+       root "{{ greenpithumb_frontend_static_root }}";
+     }
+     location /temperatureHistory.json {
+       proxy_pass http://localhost:{{ greenpithumb_frontend_app_port }};
+     }
+     location /lightHistory.json {
+       proxy_pass http://localhost:{{ greenpithumb_frontend_app_port }};
+     }
+     location /soilMoistureHistory.json {
+       proxy_pass http://localhost:{{ greenpithumb_frontend_app_port }};
+     }
+     location /ambientHumidityHistory.json {
+       proxy_pass http://localhost:{{ greenpithumb_frontend_app_port }};
+     }
+nginx_remove_default_vhost: true
+nginx_extra_http_options: |
+    proxy_buffering    off;

@@ -1,6 +1,19 @@
 ---
-greenpithumb_user: greenpithumb
-greenpithumb_group: greenpithumb
+greenpithumb_backend_user: greenpithumb
+greenpithumb_backend_group: greenpithumb
+greenpithumb_frontend_user: greenpithumb-frontend
+greenpithumb_frontend_group: greenpithumb-frontend
 greenpithumb_backend_path: "/opt/greenpithumb"
+greenpithumb_frontend_path: "/opt/greenpithumb-frontend"
 greenpithumb_git_repo: "https://github.com/JeetShetty/GreenPiThumb"
 greenpithumb_git_version: "master"
+greenpithumb_frontend_git_repo: "https://github.com/JeetShetty/GreenPiThumb_Frontend"
+greenpithumb_frontend_git_version: "master"
+greenpithumb_frontend_static_git_repo: "https://github.com/JeetShetty/GreenPiThumb_Frontend_static"
+greenpithumb_frontend_static_git_version: "master"
+# Location of greenpithumb-frontend's static web files.
+greenpithumb_frontend_static_root: /var/www/greenpithumb-frontend
+# Port on which greenpithumb-frontend listens for application requests.
+greenpithumb_frontend_app_port: 8082
+# Port on which greenpithumb-frontend listens for external web requests.
+greenpithumb_frontend_web_port: 80

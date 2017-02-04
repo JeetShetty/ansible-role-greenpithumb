@@ -3,3 +3,8 @@
   command: "python setup.py install {{ adafruit_dht_extra_args }}"
   args:
     chdir: "{{ __greenpithumb_adafruit_dht_tmp_path }}"
+
+- name: restart greenpithumb-frontend
+  service:
+    name: greenpithumb-frontend
+    state: restarted

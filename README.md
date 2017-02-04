@@ -11,8 +11,8 @@ Ansible role for [GreenPiThumb](https://github.com/JeetShetty/greenpithumb).
 Available variables are listed below, along with default values (see [defaults/main.yml](defaults/main.yml)):
 
 ```yaml
-greenpithumb_user: greenpithumb
-greenpithumb_group: greenpithumb
+greenpithumb_backend_user: greenpithumb
+greenpithumb_backend_group: greenpithumb
 ```
 
 The user and group under which to run GreenPiThumb.
@@ -37,7 +37,7 @@ The git repository to use for GreenPiThumb.
 
 ## Dependencies
 
-None
+* [geerlingguy.nginx](https://galaxy.ansible.com/geerlingguy/nginx/)
 
 ## Example Playbook
 
