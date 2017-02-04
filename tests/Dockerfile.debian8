@@ -1,0 +1,7 @@
+FROM geerlingguy/docker-debian8-ansible:latest
+
+# Install ansible-lint
+RUN apt-get update
+RUN apt-get install -y python-pip
+RUN pip install setuptools --upgrade
+RUN pip install ansible-lint
