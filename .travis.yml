@@ -16,10 +16,7 @@ services:
 
 install:
   - pip install ansible==2.2.0
-
-  # Check ansible version
-  - ansible --version
-
+  - pip install ansible-lint==3.4.10
 script:
   - ./build
 
