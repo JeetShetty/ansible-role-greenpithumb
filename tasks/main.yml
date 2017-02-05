@@ -82,6 +82,29 @@
     mode: 0444
     remote_src: yes
 
+- name: create diagnostics scripts paths
+  file:
+    path: "{{ greenpithumb_diagnostic_path }}"
+    state: directory
+    owner: "{{ greenpithumb_backend_user }}"
+    group: "{{ greenpithumb_backend_group }}"
+    mode: 0755
+  when: greenpithumb_diagnostics_enabled
+
+- name: install diagnostic scripts
+  copy:
+    src: "{{ item }}"
+    dest: "{{ greenpithumb_diagnostic_path }}/{{ item }}"
+    owner: "{{ greenpithumb_backend_user }}"
+    group: "{{ greenpithumb_backend_group }}"
+    mode: 0777
+  with_items:
+    - test_dht11.py
+    - test_light_sensor.py
+    - test_pump.py
+    - test_soil_moisture_sensor.py
+  when: greenpithumb_diagnostics_enabled
+
 - name: download greenpithumb frontend code
   git:
     repo: "{{ greenpithumb_frontend_git_repo }}"

@@ -5,6 +5,10 @@ greenpithumb_frontend_user: greenpithumb-frontend
 greenpithumb_frontend_group: greenpithumb-frontend
 greenpithumb_backend_path: "/opt/greenpithumb"
 greenpithumb_frontend_path: "/opt/greenpithumb-frontend"
+# Whether to install GreenPiThumb diagnostic tools.
+greenpithumb_diagnostics_enabled: True
+# Path for GreenPiThumb diagnostic scripts.
+greenpithumb_diagnostic_path: "/opt/greenpithumb-diagnostic"
 greenpithumb_git_repo: "https://github.com/JeetShetty/GreenPiThumb"
 greenpithumb_git_version: "master"
 greenpithumb_frontend_git_repo: "https://github.com/JeetShetty/GreenPiThumb_Frontend"
