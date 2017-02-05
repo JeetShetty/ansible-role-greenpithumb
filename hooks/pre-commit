@@ -1,6 +1,7 @@
 #!/bin/bash
 
-export distro=ubuntu1404
-export init=/sbin/init
+export distro=debian8
+export init=/bin/systemd
+export run_opts="--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
 
 bash -x ./build
