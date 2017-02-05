@@ -32,14 +32,10 @@ sudo docker exec "${container_id}" \
   ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml \
     --syntax-check
 
-# Run ansible-lint (outside of docker container).
-ansible-lint tests/test.yml
-
 # Check that role installs successfully.
 sudo docker exec "${container_id}" \
   env TERM=xterm \
   ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml
-
 
 # Get container's IP address.
 print_ip_python=$(echo "import sys, json;
@@ -58,3 +54,6 @@ curl -s "${container_ip}"  \
 sudo docker stop "${container_id}"
 sudo docker rm "${container_id}"
 rm tests/Dockerfile
+
+# Check role for linter errors.
+ansible-lint tests/test.yml
