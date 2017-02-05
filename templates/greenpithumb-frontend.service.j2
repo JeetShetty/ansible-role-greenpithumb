@@ -1,0 +1,9 @@
+[Unit]
+Description=GreenPiThumb Frontend Service
+
+[Service]
+ExecStart=python server/server.py --port {{ greenpithumb_frontend_app_port }}
+WorkingDirectory={{ greenpithumb_frontend_path }}
+
+[Install]
+WantedBy=multi-user.target

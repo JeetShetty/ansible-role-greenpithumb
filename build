@@ -40,6 +40,20 @@ sudo docker exec "${container_id}" \
   env TERM=xterm \
   ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml
 
+
+# Get container's IP address.
+print_ip_python=$(echo "import sys, json;
+print json.load(sys.stdin)[0]['NetworkSettings']['IPAddress']")
+container_ip=$(sudo docker inspect "${container_id}" | \
+    python -c "${print_ip_python}")
+echo "Container IP Address:" "${container_ip}"
+
+# Check that GreenPiThumb is serving.
+curl -s "${container_ip}"  \
+  | grep "GreenPiThumb" && \
+  (echo 'Landing page test: pass' && exit 0) || \
+  (echo 'Landing page test: fail' && exit 1)
+
 # Clean up
 sudo docker stop "${container_id}"
 sudo docker rm "${container_id}"
