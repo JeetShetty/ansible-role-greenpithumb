@@ -24,16 +24,23 @@ greenpithumb_backend_path: "/opt/greenpithumb"
 The path to which to install the GreenPiThumb backend files.
 
 ```yaml
-greenpithumb_git_version: "master"
+greenpithumb_frontend_web_port: 80
 ```
 
-The source git version/branch to install GreenPiThumb.
+The port the GreenPiThumb web app will listen to for external HTTP requests.
 
 ```yaml
-greenpithumb_git_repo: "https://github.com/JeetShetty/GreenPiThumb"
+greenpithumb_diagnostics_enabled: True
 ```
 
-The git repository to use for GreenPiThumb.
+Controls whether to install simple scripts for diagnosing GreenPiThumb's
+hardware.
+
+```yaml
+greenpithumb_diagnostic_path: "/opt/greenpithumb-diagnostic"
+```
+
+Path to install GreenPiThumb's diagnostic scripts.
 
 ## Dependencies
 
