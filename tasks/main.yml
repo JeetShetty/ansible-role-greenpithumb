@@ -100,7 +100,7 @@
   pip:
     requirements: "{{ greenpithumb_frontend_path }}/requirements.txt"
 
-- name: copy upstart script
+- name: copy systemd service file
   template:
     src: greenpithumb-frontend.service.j2
     dest: /etc/systemd/system/greenpithumb-frontend.service
