@@ -117,6 +117,7 @@
     dest: /etc/systemd/system/greenpithumb-frontend.service
     mode: 0644
   notify:
+    - reload greenpithumb-frontend
     - restart greenpithumb-frontend
 
 - name: download greenpithumb frontend static files
