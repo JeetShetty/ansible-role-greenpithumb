@@ -37,6 +37,16 @@ sudo docker exec "${container_id}" \
   env TERM=xterm \
   ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml
 
+# Test role idempotence.
+idempotence_file=$(mktemp)
+sudo docker exec "${container_id}" \
+  env TERM=xterm \
+  ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml \
+  | tee "${idempotence_file}"
+grep -q 'changed=0.*failed=0' "${idempotence_file}" && \
+  (echo 'Idempotence test: pass' && exit 0) || \
+  (echo 'Idempotence test: fail' && exit 1)
+
 # Get container's IP address.
 print_ip_python=$(echo "import sys, json;
 print json.load(sys.stdin)[0]['NetworkSettings']['IPAddress']")

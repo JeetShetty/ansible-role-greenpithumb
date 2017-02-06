@@ -8,3 +8,26 @@
   service:
     name: greenpithumb-frontend
     state: restarted
+
+- name: set greenpithumb backend file permissions
+  file:
+    path: "{{ greenpithumb_backend_path }}"
+    owner: "{{ greenpithumb_backend_user }}"
+    group: "{{ greenpithumb_backend_group }}"
+    recurse: yes
+    state: directory
+
+- name: set greenpithumb frontend file permissions
+  file:
+    path: "{{ greenpithumb_frontend_path }}"
+    owner: "{{ greenpithumb_frontend_user }}"
+    group: "{{ greenpithumb_frontend_group }}"
+    recurse: yes
+    state: directory
+
+- name: set greenpithumb frontend static file permissions
+  file:
+    path: "{{ greenpithumb_frontend_static_root }}"
+    owner: "{{ nginx_user }}"
+    recurse: yes
+    state: directory
