@@ -60,14 +60,8 @@
     repo: "{{ greenpithumb_git_repo }}"
     dest: "{{ greenpithumb_backend_path }}"
     version: "{{ greenpithumb_git_version }}"
-
-- name: set greenpithumb file permissions
-  file:
-    path: "{{ greenpithumb_backend_path }}"
-    owner: "{{ greenpithumb_backend_user }}"
-    group: "{{ greenpithumb_backend_group }}"
-    recurse: yes
-    state: directory
+  notify:
+    - set greenpithumb backend file permissions
 
 - name: install greenpithumb dependencies
   pip:
@@ -110,14 +104,8 @@
     repo: "{{ greenpithumb_frontend_git_repo }}"
     dest: "{{ greenpithumb_frontend_path }}"
     version: "{{ greenpithumb_frontend_git_version }}"
-
-- name: set greenpithumb frontend file permissions
-  file:
-    path: "{{ greenpithumb_frontend_path }}"
-    owner: "{{ greenpithumb_frontend_user }}"
-    group: "{{ greenpithumb_frontend_group }}"
-    recurse: yes
-    state: directory
+  notify:
+    - set greenpithumb frontend file permissions
 
 - name: install greenpithumb frontend dependencies
   pip:
@@ -136,10 +124,5 @@
     repo: "{{ greenpithumb_frontend_static_git_repo }}"
     dest: "{{ greenpithumb_frontend_static_root }}"
     version: "{{ greenpithumb_frontend_static_git_version }}"
-
-- name: set greenpithumb frontend static file permissions
-  file:
-    path: "{{ greenpithumb_frontend_static_root }}"
-    owner: "{{ nginx_user }}"
-    recurse: yes
-    state: directory
+  notify:
+    - set greenpithumb frontend static file permissions
