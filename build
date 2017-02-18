@@ -71,7 +71,7 @@ response_code=$( \
   curl -s -o /dev/null -w "%{http_code}" \
   "http://${container_ip}/non-existent-file.html")
 if [ $response_code == "404" ]; then
-  echo "404 test: pass" && exit 0
+  echo "404 test: pass"
 else
   echo "404 test: fail" && exit 1
 fi
