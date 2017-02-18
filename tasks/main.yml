@@ -111,15 +111,6 @@
   pip:
     requirements: "{{ greenpithumb_frontend_path }}/requirements.txt"
 
-- name: copy systemd service file
-  template:
-    src: greenpithumb-frontend.service.j2
-    dest: /etc/systemd/system/greenpithumb-frontend.service
-    mode: 0644
-  notify:
-    - reload greenpithumb-frontend
-    - restart greenpithumb-frontend
-
 - name: download greenpithumb frontend static files
   git:
     repo: "{{ greenpithumb_frontend_static_git_repo }}"
@@ -127,3 +118,21 @@
     version: "{{ greenpithumb_frontend_static_git_version }}"
   notify:
     - set greenpithumb frontend static file permissions
+
+- name: copy greenpithumb backend systemd service file
+  template:
+    src: greenpithumb-backend.service.j2
+    dest: /etc/systemd/system/greenpithumb-backend.service
+    mode: 0644
+  notify:
+    - reload greenpithumb-backend
+    - restart greenpithumb-backend
+
+- name: copy greenpithumb frontend systemd service file
+  template:
+    src: greenpithumb-frontend.service.j2
+    dest: /etc/systemd/system/greenpithumb-frontend.service
+    mode: 0644
+  notify:
+    - reload greenpithumb-frontend
+    - restart greenpithumb-frontend
