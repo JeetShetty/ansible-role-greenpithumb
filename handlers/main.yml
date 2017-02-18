@@ -4,6 +4,11 @@
   args:
     chdir: "{{ __greenpithumb_adafruit_dht_tmp_path }}"
 
+- name: reload greenpithumb-frontend
+  service:
+    name: greenpithumb-frontend
+    state: reloaded
+
 - name: restart greenpithumb-frontend
   service:
     name: greenpithumb-frontend
