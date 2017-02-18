@@ -55,16 +55,16 @@ container_ip=$(sudo docker inspect "${container_id}" | \
 echo "Container IP Address:" "${container_ip}"
 
 # Check that GreenPiThumb Frontend is serving.
-curl -s "http://${container_ip}/"  \
+curl -s "http://${container_ip}/" \
   | grep "GreenPiThumb" && \
   (echo "Landing page test: pass" && exit 0) || \
   (echo "Landing page test: fail" && exit 1)
 
 # Make sure application files are accessible
-curl -s "http://${container_ip}/app/app.js"
+curl -s "http://${container_ip}/app/app.js" -o /dev/null
 
 # Make sure vendor files are accessible
-curl -s "http://${container_ip}/vendor/bootstrap/bootstrap.min.css"
+curl -s "http://${container_ip}/vendor/bootstrap/bootstrap.min.css" -o /dev/null
 
 # Check that GreenPiThumb Frontend returns 404 on non-existent HTML files.
 response_code=$( \
