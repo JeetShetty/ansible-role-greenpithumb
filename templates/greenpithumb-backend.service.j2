@@ -1,0 +1,10 @@
+[Unit]
+Description=GreenPiThumb Backend Service
+
+[Service]
+ExecStart=/usr/bin/python {{ greenpithumb_frontend_path }}/greenpithumb/greenpithumb.py
+WorkingDirectory={{ greenpithumb_backend_path }}
+User={{ greenpithumb_backend_user }}
+
+[Install]
+WantedBy=multi-user.target
