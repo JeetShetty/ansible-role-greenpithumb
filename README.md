@@ -15,13 +15,26 @@ greenpithumb_backend_user: greenpithumb
 greenpithumb_backend_group: greenpithumb
 ```
 
-The user and group under which to run GreenPiThumb.
+The user and group under which to run the GreenPiThumb backend service.
 
 ```yaml
 greenpithumb_backend_path: "/opt/greenpithumb"
 ```
 
 The path to which to install the GreenPiThumb backend files.
+
+```yaml
+greenpithumb_frontend_user: greenpithumb-frontend
+greenpithumb_frontend_group: greenpithumb-frontend
+```
+
+The user and group under which to run the GreenPiThumb frontend web server.
+
+```yaml
+greenpithumb_frontend_path: "/opt/greenpithumb-frontend"
+```
+
+The path to which to install the GreenPiThumb frontend files.
 
 ```yaml
 greenpithumb_frontend_web_port: 80
