@@ -3,7 +3,7 @@ __greenpithumb_adafruit_dht_tmp_path: /tmp/Adafruit_Python_DHT
 nginx_vhosts:
 - listen: "{{ greenpithumb_frontend_web_port }} default_server"
   server_name: "greenpithumb_frontend"
-  root: "{{ greenpithumb_frontend_static_root }}/src"
+  root: "{{ greenpithumb_frontend_static_root }}/app"
   index: "index.html"
   extra_parameters: |
     location / {
