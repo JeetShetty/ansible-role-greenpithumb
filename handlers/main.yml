@@ -46,3 +46,8 @@
     owner: "{{ nginx_user }}"
     recurse: yes
     state: directory
+
+- name: install greenpithumb frontend static dependencies
+  npm:
+    path: "{{ greenpithumb_frontend_static_root }}"
+  become_user: "{{ nginx_user }}"
