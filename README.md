@@ -58,6 +58,7 @@ Path to install GreenPiThumb's diagnostic scripts.
 ## Dependencies
 
 * [geerlingguy.nginx](https://galaxy.ansible.com/geerlingguy/nginx/)
+* [geerlingguy.nodejs](https://galaxy.ansible.com/geerlingguy/nodejs)
 
 ## Example Playbook
 
