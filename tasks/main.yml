@@ -62,6 +62,7 @@
     version: "{{ greenpithumb_git_version }}"
   notify:
     - set greenpithumb backend file permissions
+    - restart greenpithumb-backend
 
 - name: install greenpithumb dependencies
   pip:
@@ -106,10 +107,13 @@
     version: "{{ greenpithumb_frontend_git_version }}"
   notify:
     - set greenpithumb frontend file permissions
+    - restart greenpithumb-frontend
 
 - name: install greenpithumb frontend dependencies
   pip:
     requirements: "{{ greenpithumb_frontend_path }}/requirements.txt"
+  notify:
+    - restart greenpithumb-frontend
 
 - name: download greenpithumb frontend static files
   git:
