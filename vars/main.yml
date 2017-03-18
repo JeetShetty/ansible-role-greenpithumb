@@ -20,3 +20,4 @@ nginx_vhosts:
 nginx_remove_default_vhost: true
 nginx_extra_http_options: |
     proxy_buffering    off;
+nodejs_version: "0.12"

@@ -21,6 +21,31 @@
     - user: "{{ greenpithumb_frontend_user }}"
       group: "{{ greenpithumb_frontend_group }}"
 
+- name: add Adafruit apt repository
+  apt_repository:
+    repo: deb http://apt.adafruit.com/raspbian/ jessie main
+    state: present
+  when: (ansible_lsb is defined) and (ansible_lsb.id == "Raspbian")
+  register: add_adafruit_repo
+
+- name: add Adafruit apt key
+  apt_key:
+    url: https://apt.adafruit.com/apt.adafruit.com.gpg.key
+    state: present
+  when: (ansible_lsb is defined) and (ansible_lsb.id == "Raspbian")
+  register: add_adafruit_key
+
+- name: update apt cache
+  apt:
+    update_cache: true
+  when: "add_adafruit_repo.changed or add_adafruit_key.changed"
+
+- name: install Adafruit node.js package
+  apt:
+    name: node
+    state: installed
+  when: (ansible_lsb is defined) and (ansible_lsb.id == "Raspbian")
+
 - name: install necessary packages
   apt:
     name: "{{ item }}"
@@ -52,7 +77,7 @@
 # machine and add the force test parameter.
 - name: set Adafruit DHT library test compatibility
   set_fact:
-    adafruit_dht_extra_args: "--force-test"
+    greenpithumb_adafruit_dht_extra_args: "--force-test"
   when: "'arm' not in ansible_machine"
 
 - name: download greenpithumb backend code
