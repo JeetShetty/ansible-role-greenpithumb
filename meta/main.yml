@@ -14,4 +14,4 @@ galaxy_info:
     - raspberrypi
 dependencies:
   - { role: geerlingguy.nginx }
-  - { role: geerlingguy.nodejs }
+  - { role: geerlingguy.nodejs, when: "'arm' not in ansible_machine" }

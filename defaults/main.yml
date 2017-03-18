@@ -9,6 +9,8 @@ greenpithumb_backend_group: greenpithumb
 greenpithumb_backend_path: "/opt/greenpithumb"
 greenpithumb_git_repo: "https://github.com/JeetShetty/GreenPiThumb"
 greenpithumb_git_version: "master"
+# Extra parameters for installing the Adafruit DHT library.
+greenpithumb_adafruit_dht_extra_args: ""
 
 #
 # Settings for the GreenPiThumb frontend application server (serving non-static
