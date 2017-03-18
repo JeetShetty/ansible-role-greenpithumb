@@ -38,7 +38,7 @@
 - name: update apt cache
   apt:
     update_cache: true
-  when: "adafruit_repo_added or adafruit_key_added"
+  when: "add_adafruit_repo.changed or add_adafruit_key.changed"
 
 - name: install Adafruit node.js package
   apt:
