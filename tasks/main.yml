@@ -40,6 +40,12 @@
     update_cache: true
   when: "adafruit_repo_added or adafruit_key_added"
 
+- name: install Adafruit node.js package
+  apt:
+    name: node
+    state: installed
+  when: ansible_lsb.id == "Raspbian"
+
 - name: install necessary packages
   apt:
     name: "{{ item }}"
@@ -47,7 +53,6 @@
   with_items:
     - build-essential
     - git
-    - node
     - python-dev
     - python-openssl
     - python-pip
