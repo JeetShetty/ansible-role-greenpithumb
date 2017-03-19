@@ -35,7 +35,7 @@ greenpithumb_frontend_static_git_version: "master"
 greenpithumb_frontend_static_root: /var/www/greenpithumb-frontend
 # Port on which greenpithumb-frontend listens for external web requests.
 greenpithumb_frontend_web_port: 80
-# Install frontend in production mode
+# Install frontend in production mode.
 greenpithumb_npm_production_mode: "yes"
 
 #
