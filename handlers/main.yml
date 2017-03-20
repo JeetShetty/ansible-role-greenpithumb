@@ -50,4 +50,5 @@
 - name: install greenpithumb frontend static dependencies
   npm:
     path: "{{ greenpithumb_frontend_static_root }}"
+    production: "{{ greenpithumb_npm_production_mode }}"
   become_user: "{{ nginx_user }}"
