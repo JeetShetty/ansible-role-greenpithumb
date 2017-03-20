@@ -160,11 +160,6 @@
     - .local
     - .npm
 
-- name: choose whether this is a production frontend for npm
-  set_fact:
-    greenpithumb_npm_production_mode: "no"
-  when: "'arm' not in ansible_machine"
-
 - name: copy greenpithumb backend systemd service file
   template:
     src: greenpithumb-backend.service.j2
