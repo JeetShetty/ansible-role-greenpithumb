@@ -102,6 +102,17 @@
     mode: 0444
     remote_src: yes
 
+- name: create greenpithumb data folders
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ greenpithumb_backend_user }}"
+    group: "{{ greenpithumb_backend_group }}"
+    mode: 0755
+  with_items:
+    - "{{ greenpithumb_data_path }}"
+    - "{{ greenpithumb_data_path }}/images"
+
 - name: create diagnostics scripts paths
   file:
     path: "{{ greenpithumb_diagnostic_path }}"
