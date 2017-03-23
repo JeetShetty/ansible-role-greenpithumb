@@ -9,14 +9,12 @@ nginx_vhosts:
     location / {
       try_files $uri $uri/index.html @proxy;
     }
-    location ~* ^/[^(vendor/)].+\.(html|js|css|jpeg|png|ico)$ {
+    location ~* ^/.+\.(html|js|css|jpeg|png|ico)$ {
     }
     location @proxy {
       proxy_pass http://localhost:{{ greenpithumb_frontend_app_port }};
     }
-    location /vendor/ {
-      root "{{ greenpithumb_frontend_static_root }}";
-    }
+
 nginx_remove_default_vhost: true
 nginx_extra_http_options: |
     proxy_buffering    off;
