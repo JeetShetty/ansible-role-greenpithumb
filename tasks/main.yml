@@ -63,7 +63,7 @@
 
 - name: install picamera package
   apt:
-    name: python-picamra
+    name: python-picamera
     state: installed
   when: is_pi
 
