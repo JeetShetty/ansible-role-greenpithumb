@@ -9,6 +9,7 @@ greenpithumb_backend_group: greenpithumb
 greenpithumb_backend_path: "/opt/greenpithumb"
 # Location to store GreenPiThumb database file and images.
 greenpithumb_data_path: "/opt/greenpithumb-data"
+greenpithumb_images_path: "{{ greenpithumb_data_path }}/images"
 greenpithumb_git_repo: "https://github.com/JeetShetty/GreenPiThumb"
 greenpithumb_git_version: "master"
 # Extra parameters for installing the Adafruit DHT library.
