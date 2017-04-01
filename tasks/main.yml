@@ -61,18 +61,8 @@
     - python-openssl
     - python-pip
 
-- name: install picamera package
-  apt:
-    name: python-picamera
-    state: installed
-  when: is_pi
-
-# TODO(mtlynch): Should reboot after this.
-- name: enable Raspberry Pi camera support
-  lineinfile:
-    dest: /boot/config.txt
-    regexp: "^start_x="
-    line: "start_x=1"
+- name: configure Raspberry Pi camera
+  include: "camera.yml"
   when: is_pi
 
 - name: install libraries
