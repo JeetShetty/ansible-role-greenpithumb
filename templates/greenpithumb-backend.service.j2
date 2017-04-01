@@ -3,11 +3,14 @@ Description=GreenPiThumb Backend Service
 
 [Service]
 ExecStart=/usr/bin/python \
-  {{ greenpithumb_frontend_path }}/greenpithumb/greenpithumb.py  \
-  --db_file={{ greenpithumb_data_path }}/greenpithumb.db \
+  {{ greenpithumb_backend_path }}/greenpithumb/greenpithumb.py  \
+  --db_file {{ greenpithumb_data_path }}/greenpithumb.db \
+  --poll_interval {{ 15 * 60 }} \
+  --photo_interval {{ 4 * 60 * 60 }} \
+  --image_path {{ greenpithumb_images_path }} \
   --verbose
 WorkingDirectory={{ greenpithumb_backend_path }}
-User={{ greenpithumb_backend_user }}
+User=root
 
 [Install]
 WantedBy=multi-user.target
