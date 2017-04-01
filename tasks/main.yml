@@ -119,7 +119,7 @@
     mode: 0755
   with_items:
     - "{{ greenpithumb_data_path }}"
-    - "{{ greenpithumb_data_path }}/images"
+    - "{{ greenpithumb_images_path }}"
 
 - name: create diagnostics scripts paths
   file:
@@ -178,6 +178,13 @@
     - .config
     - .local
     - .npm
+
+- name: symlink frontend to images path
+  file:
+    src: "{{ greenpithumb_images_path }}"
+    dest: "{{ greenpithumb_frontend_static_root }}/app/images"
+    owner: "{{ nginx_user }}"
+    state: link
 
 - name: copy greenpithumb backend systemd service file
   template:
