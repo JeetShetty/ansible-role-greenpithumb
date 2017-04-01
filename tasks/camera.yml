@@ -1,0 +1,24 @@
+---
+- name: install picamera package
+  apt:
+    name: python-picamera
+    state: installed
+
+# TODO(mtlynch): Should reboot after this.
+- name: enable Raspberry Pi camera support
+  lineinfile:
+    dest: /boot/config.txt
+    regexp: "^start_x="
+    line: "start_x=1"
+
+- name: increase GPU memory
+  lineinfile:
+    dest: /boot/config.txt
+    regexp: "^gpu_mem="
+    line: "gpu_mem=128"
+
+# User needs to be in the video group to access the camera.
+- name: add greenpithumb backend to video group
+  user:
+    name: "{{ greenpithumb_backend_user }}"
+    groups: video,

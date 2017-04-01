@@ -2,6 +2,10 @@
 - name: load variables
   include_vars: "main.yml"
 
+- name: check if this is a Raspberry Pi system
+  set_fact:
+    is_pi: (ansible_lsb is defined) and (ansible_lsb.id == "Raspbian")
+
 - name: create greenpithumb groups
   group:
     name: "{{ item }}"
@@ -25,14 +29,14 @@
   apt_repository:
     repo: deb http://apt.adafruit.com/raspbian/ jessie main
     state: present
-  when: (ansible_lsb is defined) and (ansible_lsb.id == "Raspbian")
+  when: is_pi
   register: add_adafruit_repo
 
 - name: add Adafruit apt key
   apt_key:
     url: https://apt.adafruit.com/apt.adafruit.com.gpg.key
     state: present
-  when: (ansible_lsb is defined) and (ansible_lsb.id == "Raspbian")
+  when: is_pi
   register: add_adafruit_key
 
 - name: update apt cache
@@ -44,7 +48,7 @@
   apt:
     name: node
     state: installed
-  when: (ansible_lsb is defined) and (ansible_lsb.id == "Raspbian")
+  when: is_pi
 
 - name: install necessary packages
   apt:
@@ -56,6 +60,10 @@
     - python-dev
     - python-openssl
     - python-pip
+
+- name: configure Raspberry Pi camera
+  include: "camera.yml"
+  when: is_pi
 
 - name: install libraries
   pip:
