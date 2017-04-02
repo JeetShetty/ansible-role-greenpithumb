@@ -21,8 +21,14 @@ sudo docker run \
 container_id="$(cat $id_file)"
 echo "Container ID:" "${container_id}"
 
+# Print ansible version.
+sudo docker exec "${container_id}" \
+  env TERM=xterm \
+  ansible --version
+
 # Install dependencies.
 sudo docker exec "${container_id}" \
+  env TERM=xterm \
   ansible-galaxy install \
     -r /etc/ansible/roles/role_under_test/tests/requirements.yml
 
