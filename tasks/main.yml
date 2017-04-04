@@ -173,7 +173,6 @@
     path: "/var/www/{{ item }}"
     state: directory
     owner: "{{ nginx_user }}"
-    group: "{{ nginx_user }}"
   with_items:
     - .cache
     - .config
@@ -185,7 +184,6 @@
     src: "{{ greenpithumb_images_path }}"
     dest: "{{ greenpithumb_frontend_static_root }}/app/images"
     owner: "{{ nginx_user }}"
-    group: "{{ nginx_user }}"
     state: link
 
 - name: copy greenpithumb backend systemd service file

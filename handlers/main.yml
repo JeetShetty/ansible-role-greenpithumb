@@ -44,7 +44,6 @@
   file:
     path: "{{ greenpithumb_frontend_static_root }}"
     owner: "{{ nginx_user }}"
-    group: "{{ nginx_user }}"
     recurse: yes
     state: directory
 
