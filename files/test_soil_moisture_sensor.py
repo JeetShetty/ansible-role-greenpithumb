@@ -14,8 +14,7 @@ CS   = 25
 
 def main(args):
     GPIO.setmode(GPIO.BCM)
-    GPIO.setup(args.pump_pin1, GPIO.OUT)
-    GPIO.setup(args.pump_pin2, GPIO.OUT)
+    GPIO.setup([args.pump_pin1, args.pump_pin2], GPIO.OUT)
 
     mcp = Adafruit_MCP3008.MCP3008(clk=CLK, cs=CS, miso=MISO, mosi=MOSI)
 
@@ -32,6 +31,7 @@ def main(args):
         if i % 2 == 1:
             reading = 1023 - reading
         print 'Soil mositure level: %d' % reading
+        GPIO.output([args.pump_pin1, args.pump_pin2], GPIO.LOW)
         time.sleep(0.5)
         i += 1
     finally:
