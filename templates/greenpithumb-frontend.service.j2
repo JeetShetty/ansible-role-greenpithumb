@@ -5,7 +5,8 @@ Description=GreenPiThumb Frontend Service
 ExecStart=/usr/bin/python \
   {{ greenpithumb_frontend_path }}/server/server.py \
   --port {{ greenpithumb_frontend_app_port }} \
-  --db_file={{ greenpithumb_data_path }}/greenpithumb.db
+  --db_file {{ greenpithumb_data_path }}/greenpithumb.db \
+  --image_path {{ greenpithumb_images_path }}
 WorkingDirectory={{ greenpithumb_frontend_path }}
 User={{ greenpithumb_frontend_user }}
 
