@@ -90,9 +90,9 @@
 
 - name: download greenpithumb backend code
   git:
-    repo: "{{ greenpithumb_git_repo }}"
+    repo: "{{ greenpithumb_backend_git_repo }}"
     dest: "{{ greenpithumb_backend_path }}"
-    version: "{{ greenpithumb_git_version }}"
+    version: "{{ greenpithumb_backend_git_version }}"
   notify:
     - set greenpithumb backend file permissions
     - restart greenpithumb-backend
