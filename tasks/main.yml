@@ -192,8 +192,13 @@
     dest: /etc/systemd/system/greenpithumb-backend.service
     mode: 0644
   notify:
-    - reload greenpithumb-backend
+    - reload systemd configs
     - restart greenpithumb-backend
+
+- name: enable greenpithumb backend to start at boot
+  service:
+    name: greenpithumb-backend
+    enabled: yes
 
 - name: copy greenpithumb frontend systemd service file
   template:
@@ -201,5 +206,10 @@
     dest: /etc/systemd/system/greenpithumb-frontend.service
     mode: 0644
   notify:
-    - reload greenpithumb-frontend
+    - reload systemd configs
     - restart greenpithumb-frontend
+
+- name: enable greenpithumb frontend to start at boot
+  service:
+    name: greenpithumb-frontend
+    enabled: yes

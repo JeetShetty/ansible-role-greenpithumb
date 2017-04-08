@@ -4,20 +4,15 @@
   args:
     chdir: "{{ __greenpithumb_adafruit_dht_tmp_path }}"
 
-- name: reload greenpithumb-backend
-  service:
+- name: reload systemd configs
+  systemd:
+    daemon_reload: yes
     name: greenpithumb-backend
-    state: reloaded
 
 - name: restart greenpithumb-backend
   service:
     name: greenpithumb-backend
     state: restarted
-
-- name: reload greenpithumb-frontend
-  service:
-    name: greenpithumb-frontend
-    state: reloaded
 
 - name: restart greenpithumb-frontend
   service:
