@@ -1,4 +1,10 @@
 ---
+# Location to store GreenPiThumb database file and images.
+greenpithumb_data_path: "/opt/greenpithumb-data"
+greenpithumb_images_path: "{{ greenpithumb_data_path }}/images"
+# Extra parameters for installing the Adafruit DHT library.
+greenpithumb_adafruit_dht_extra_args: ""
+
 #
 # Settings for the GreenPiThumb backend. This is the portion that runs the
 # GreenPiThumb hardware and collects sensor data.
@@ -7,13 +13,14 @@
 greenpithumb_backend_user: greenpithumb
 greenpithumb_backend_group: greenpithumb
 greenpithumb_backend_path: "/opt/greenpithumb"
-# Location to store GreenPiThumb database file and images.
-greenpithumb_data_path: "/opt/greenpithumb-data"
-greenpithumb_images_path: "{{ greenpithumb_data_path }}/images"
-greenpithumb_git_repo: "https://github.com/JeetShetty/GreenPiThumb"
-greenpithumb_git_version: "master"
-# Extra parameters for installing the Adafruit DHT library.
-greenpithumb_adafruit_dht_extra_args: ""
+greenpithumb_backend_git_repo: "https://github.com/JeetShetty/GreenPiThumb"
+greenpithumb_backend_git_version: "master"
+# Settings for GreenPiThumb backend command-line flags.
+greenpithumb_backend_poll_interval: null
+greenpithumb_backend_photo_interval: null
+greenpithumb_backend_sleep_windows: null
+greenpithumb_backend_db_file: "{{ greenpithumb_data_path }}/greenpithumb.db"
+greenpithumb_backend_moisture_threshold: null
 
 #
 # Settings for the GreenPiThumb frontend application server (serving non-static
