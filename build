@@ -68,8 +68,24 @@ curl -s "http://${container_ip}/" \
 
 # Make sure application files are accessible
 curl -s "http://${container_ip}/app/app.js" -o /dev/null && \
-  (echo "Application file test: pass") || \
-  (echo "Application file test: fail" && exit 1)
+response_code=$( \
+  curl -s -o /dev/null -w "%{http_code}" \
+  "http://${container_ip}/app.js")
+if [ "${response_code}" -eq 200 ]; then
+  echo "Application file test: pass"
+else
+  echo "Application file test: fail" && exit 1
+fi
+
+curl -s "http://${container_ip}/app/app.js" -o /dev/null && \
+response_code=$( \
+  curl -s -o /dev/null -w "%{http_code}" \
+  "http://${container_ip}/bower_components/bootstrap/dist/css/bootstrap.min.css")
+if [ "${response_code}" -eq 200 ]; then
+  echo "Vendor file test: pass"
+else
+  echo "Vendor file test: fail" && exit 1
+fi
 
 # Make sure vendor files are accessible
 curl -s "http://${container_ip}/vendor/bootstrap/bootstrap.min.css" \
