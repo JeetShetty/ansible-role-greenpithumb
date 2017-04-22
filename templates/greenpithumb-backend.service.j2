@@ -24,6 +24,9 @@ ExecStart=/usr/bin/python \
 {% if greenpithumb_backend_moisture_threshold %}
   --moisture_threshold={{ greenpithumb_backend_moisture_threshold }} \
 {% endif %}
+{% if greenpithumb_backend_camera_rotation %}
+  --camera_rotation={{ greenpithumb_backend_camera_rotation }} \
+{% endif %}
   --verbose
 WorkingDirectory={{ greenpithumb_backend_path }}
 User=root
