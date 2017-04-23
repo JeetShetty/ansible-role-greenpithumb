@@ -36,14 +36,14 @@ rm roles/role_under_test || true
 ln -s ../../ roles/role_under_test
 
 # Ansible syntax check.
-sudo ansible-playbook test.yml --syntax-check
+ansible-playbook test.yml --syntax-check
 
 # Check that role installs successfully.
-sudo ansible-playbook test.yml
+ansible-playbook test.yml
 
 # Test role idempotence.
 idempotence_file=$(mktemp)
-sudo ansible-playbook test.yml \
+ansible-playbook test.yml \
   | tee "${idempotence_file}"
 grep -q "changed=0.*failed=0" "${idempotence_file}" && \
   (echo "Idempotence test: pass" && exit 0) || \
