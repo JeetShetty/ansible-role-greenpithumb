@@ -3,13 +3,15 @@
 # Exit immediately on error
 set -e
 
-echo "FROM geerlingguy/docker-${distro}-ansible:latest" > tests/Dockerfile
+cd tests/
+
+cp "Dockerfile-${distro}" Dockerfile
 
 # Build container
-container_tag=${distro}:ansible
+container_tag=${distro}
 sudo docker build \
   --rm=true \
-  --tag=${container_tag} tests
+  --tag=${container_tag} .
 
 # Run container in detached state
 id_file=$(mktemp)
@@ -21,33 +23,27 @@ sudo docker run \
 container_id="$(cat $id_file)"
 echo "Container ID:" "${container_id}"
 
-# Print ansible version.
-sudo docker exec "${container_id}" \
-  env TERM=xterm \
-  ansible --version
+printf "${container_id} ansible_connection=docker\n" > hosts
 
-# Install dependencies.
-sudo docker exec "${container_id}" \
-  env TERM=xterm \
-  ansible-galaxy install \
-    -r /etc/ansible/roles/role_under_test/tests/requirements.yml
+# Print ansible version.
+ansible --version
+
+ansible-galaxy install -r requirements.yml
+
+# Create a symlink to the role under test (removing previous if it existed)
+mkdir -p roles
+rm roles/role_under_test || true
+ln -s ../../ roles/role_under_test
 
 # Ansible syntax check.
-sudo docker exec "${container_id}" \
-  env TERM=xterm \
-  ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml \
-    --syntax-check
+ansible-playbook test.yml --syntax-check
 
 # Check that role installs successfully.
-sudo docker exec "${container_id}" \
-  env TERM=xterm \
-  ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml
+ansible-playbook test.yml
 
 # Test role idempotence.
 idempotence_file=$(mktemp)
-sudo docker exec "${container_id}" \
-  env TERM=xterm \
-  ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml \
+ansible-playbook test.yml \
   | tee "${idempotence_file}"
 grep -q "changed=0.*failed=0" "${idempotence_file}" && \
   (echo "Idempotence test: pass" && exit 0) || \
@@ -87,10 +83,12 @@ else
   echo "404 test: fail" && exit 1
 fi
 
+# Check role for linter errors.
+ansible-lint test.yml -t greenpithumb
+
 # Clean up
 sudo docker stop "${container_id}"
 sudo docker rm "${container_id}"
-rm tests/Dockerfile
-
-# Check role for linter errors.
-ansible-lint tests/test.yml
+rm -rf roles
+rm Dockerfile
+rm hosts

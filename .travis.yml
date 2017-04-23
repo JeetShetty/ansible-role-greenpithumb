@@ -4,12 +4,16 @@ env:
   - distro: debian8
     init: /bin/systemd
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    ANSIBLE_ROLES_PATH: ~/roles
 
 services:
   - docker
 
 install:
+  - pip install ansible==2.3.0
   - pip install ansible-lint==3.4.10
+  - mkdir "${ANSIBLE_ROLES_PATH}"
+  - printf "[defaults]\nhostfile=hosts\nansible_roles=${ANSIBLE_ROLES_PATH}" > ~/.ansible.cfg
 script:
   - ./build
 

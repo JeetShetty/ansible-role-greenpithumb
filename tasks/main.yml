@@ -43,6 +43,10 @@
   apt:
     update_cache: true
   when: "add_adafruit_repo.changed or add_adafruit_key.changed"
+  tags:
+    # We need to run this now, so it can't be a handler
+    # [ANSIBLE0016] Tasks that run when changed should likely be handlers
+    - skip_ansible_lint
 
 - name: install Adafruit node.js package
   apt:
