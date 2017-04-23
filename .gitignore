@@ -1,4 +1,6 @@
 *.swp
 *.swo
 *.retry
+tests/hosts
 tests/Dockerfile
+tests/roles

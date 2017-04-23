@@ -46,4 +46,5 @@
   npm:
     path: "{{ greenpithumb_frontend_static_root }}"
     production: "{{ greenpithumb_npm_production_mode }}"
+  become: True
   become_user: "{{ nginx_user }}"
