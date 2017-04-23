@@ -3,7 +3,7 @@
 # Exit immediately on error
 set -e
 
-pushd tests/
+cd tests/
 
 cp "Dockerfile-${distro}" Dockerfile
 
@@ -92,4 +92,3 @@ sudo docker rm "${container_id}"
 rm -rf roles
 rm Dockerfile
 rm hosts
-popd
