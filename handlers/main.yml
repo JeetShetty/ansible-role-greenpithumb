@@ -34,17 +34,3 @@
     group: "{{ greenpithumb_frontend_group }}"
     recurse: yes
     state: directory
-
-- name: set greenpithumb frontend static file permissions
-  file:
-    path: "{{ greenpithumb_frontend_static_root }}"
-    owner: "{{ nginx_user }}"
-    recurse: yes
-    state: directory
-
-- name: install greenpithumb frontend static dependencies
-  npm:
-    path: "{{ greenpithumb_frontend_static_root }}"
-    production: "{{ greenpithumb_npm_production_mode }}"
-  become: True
-  become_user: "{{ nginx_user }}"

@@ -163,15 +163,6 @@
   notify:
     - restart greenpithumb-frontend
 
-- name: download greenpithumb frontend static files
-  git:
-    repo: "{{ greenpithumb_frontend_static_git_repo }}"
-    dest: "{{ greenpithumb_frontend_static_root }}"
-    version: "{{ greenpithumb_frontend_static_git_version }}"
-  notify:
-    - set greenpithumb frontend static file permissions
-    - install greenpithumb frontend static dependencies
-
 - name: create npm folder locations
   file:
     path: "/var/www/{{ item }}"
@@ -182,6 +173,29 @@
     - .config
     - .local
     - .npm
+    
+- name: create greenpithumb frontend static directory
+  file:
+    path: "{{ greenpithumb_frontend_static_root }}"
+    state: directory
+    owner: "{{ nginx_user }}"
+
+- name: download greenpithumb frontend static files
+  git:
+    repo: "{{ greenpithumb_frontend_static_git_repo }}"
+    dest: "{{ greenpithumb_frontend_static_root }}"
+    version: "{{ greenpithumb_frontend_static_git_version }}"
+  become: True
+  become_user: "{{ nginx_user }}"
+  register: download_frontend_static
+
+- name: install greenpithumb frontend static dependencies
+  npm:
+    path: "{{ greenpithumb_frontend_static_root }}"
+    production: "{{ greenpithumb_npm_production_mode }}"
+  become: True
+  become_user: "{{ nginx_user }}"
+  when: download_frontend_static.changed
 
 - name: symlink frontend to images path
   file:
