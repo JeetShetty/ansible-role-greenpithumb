@@ -28,7 +28,7 @@ printf "${container_id} ansible_connection=docker\n" > hosts
 # Print ansible version.
 ansible --version
 
-sudo ansible-galaxy install -r requirements.yml
+ansible-galaxy install -r requirements.yml
 
 # Create a symlink to the role under test (removing previous if it existed)
 mkdir -p roles
