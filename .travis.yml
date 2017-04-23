@@ -9,6 +9,7 @@ services:
   - docker
 
 install:
+  - pip install ansible==2.3.0
   - pip install ansible-lint==3.4.10
 script:
   - ./build
