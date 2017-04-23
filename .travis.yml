@@ -10,8 +10,6 @@ services:
 
 install:
   - pip install ansible==2.3.0
-  # Use a non-sudo writable location for Ansible roles.
-  - printf "[defaults]\nansible_roles=~/.ansible/roles" > ~/.ansible.cfg
   - pip install ansible-lint==3.4.10
 script:
   - ./build
