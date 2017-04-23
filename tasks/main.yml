@@ -159,25 +159,51 @@
   notify:
     - restart greenpithumb-frontend
 
-- name: download greenpithumb frontend static files
-  git:
-    repo: "{{ greenpithumb_frontend_static_git_repo }}"
-    dest: "{{ greenpithumb_frontend_static_root }}"
-    version: "{{ greenpithumb_frontend_static_git_version }}"
-  notify:
-    - set greenpithumb frontend static file permissions
-    - install greenpithumb frontend static dependencies
-
 - name: create npm folder locations
   file:
     path: "/var/www/{{ item }}"
     state: directory
-    owner: "{{ nginx_user }}"
   with_items:
     - .cache
     - .config
     - .local
     - .npm
+
+- name: create greenpithumb frontend static directory
+  file:
+    path: "{{ greenpithumb_frontend_static_root }}"
+    state: directory
+    owner: "{{ nginx_user }}"
+
+- name: download greenpithumb frontend static files
+  git:
+    repo: "{{ greenpithumb_frontend_static_git_repo }}"
+    dest: "{{ greenpithumb_frontend_static_root }}"
+    version: "{{ greenpithumb_frontend_static_git_version }}"
+  become_user: "{{ nginx_user }}"
+  register: download_frontend_static
+
+- debug: var=download_frontend_static
+- debug: var=greenpithumb_npm_production_mode
+
+#- name: install greenpithumb frontend static dependencies
+#  npm:
+#    path: "{{ greenpithumb_frontend_static_root }}"
+#    production: "{{ greenpithumb_npm_production_mode }}"
+#  become_user: "{{ nginx_user }}"
+#  when: download_frontend_static.changed
+#  register: static_deps
+
+- name: install greenpithumb frontend static dependencies
+  command: "npm install --production"
+  args:
+    chdir: "{{ greenpithumb_frontend_static_root }}"
+  become: True
+  become_user: "{{ nginx_user }}"
+  when: download_frontend_static.changed
+  register: static_deps
+
+- debug: var=static_deps
 
 - name: symlink frontend to images path
   file:
