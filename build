@@ -9,13 +9,13 @@ cp "Dockerfile-${distro}" Dockerfile
 
 # Build container
 container_tag=${distro}
-sudo docker build \
+docker build \
   --rm=true \
   --tag=${container_tag} .
 
 # Run container in detached state
 id_file=$(mktemp)
-sudo docker run \
+docker run \
   --detach \
   --volume="${PWD}":/etc/ansible/roles/role_under_test:ro \
   ${run_opts} \
@@ -52,7 +52,7 @@ grep -q "changed=0.*failed=0" "${idempotence_file}" && \
 # Get container's IP address.
 print_ip_python=$(echo "import sys, json;
 print json.load(sys.stdin)[0]['NetworkSettings']['IPAddress']")
-container_ip=$(sudo docker inspect "${container_id}" | \
+container_ip=$(docker inspect "${container_id}" | \
     python -c "${print_ip_python}")
 echo "Container IP Address:" "${container_ip}"
 
@@ -87,8 +87,8 @@ fi
 ansible-lint test.yml -t greenpithumb
 
 # Clean up
-sudo docker stop "${container_id}"
-sudo docker rm "${container_id}"
+docker stop "${container_id}"
+docker rm "${container_id}"
 rm -rf roles
 rm Dockerfile
 rm hosts
