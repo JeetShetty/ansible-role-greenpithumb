@@ -77,6 +77,12 @@ ansible-galaxy install JeetShetty.greenpithumb
 ansible-playbook example.yml
 ```
 
+## Related Repositories
+
+* [GreenPiThumb](https://github.com/JeetShetty/GreenPiThumb): The GreenPiThumb backend, which manages all the physical hardware and sensors for the GreenPiThumb device.
+* [GreenPiThumb_Frontend](https://github.com/JeetShetty/GreenPiThumb_Frontend): Web API to provide status about GreenPiThumb.
+* [GreenPiThumb_Frontend_static](https://github.com/JeetShetty/GreenPiThumb_Frontend_static): An AngularJS web app for viewing GreenPiThumb status (the static portion of the web frontend).
+
 ## License
 
 Apache2
