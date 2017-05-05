@@ -84,7 +84,7 @@ else
 fi
 
 # Check role for linter errors.
-ansible-lint test.yml -t greenpithumb
+ansible-lint test.yml -t role_under_test
 
 # Clean up
 docker stop "${container_id}"
