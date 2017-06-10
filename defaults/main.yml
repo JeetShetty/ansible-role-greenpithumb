@@ -21,6 +21,7 @@ greenpithumb_backend_photo_interval: null
 greenpithumb_backend_sleep_windows: null
 greenpithumb_backend_db_file: "{{ greenpithumb_data_path }}/greenpithumb.db"
 greenpithumb_backend_moisture_threshold: null
+greenpithumb_backend_pump_amount: null
 greenpithumb_backend_camera_rotation: null
 
 #
