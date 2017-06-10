@@ -8,10 +8,9 @@ import Adafruit_DHT
 def main(args):
     humidity, temperature = Adafruit_DHT.read_retry(Adafruit_DHT.DHT11,
                                                     args.dht_pin)
-    temperature = ((9.0 / 5.0) * temperature) + 32.0
     if humidity is not None and temperature is not None:
         print(
-            'Temp={0:0.1f}*F  Humidity={1:0.1f}%'.format(temperature, humidity))
+            'Temp={0:0.1f}*C  Humidity={1:0.1f}%'.format(temperature, humidity))
     else:
         print('Failed to get reading. Try again!')
 
